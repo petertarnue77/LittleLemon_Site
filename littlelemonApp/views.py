@@ -4,7 +4,8 @@ from django.db import IntegrityError
 
 from django.views.decorators.csrf import csrf_exempt 
 from rest_framework.decorators import renderer_classes
-from django.forms.models import model_to_dict 
+from django.forms.models import model_to_dict  
+from django.core.paginator import EmptyPage, Paginator
 
 from rest_framework import generics 
 from rest_framework.decorators import api_view 
@@ -86,12 +87,12 @@ def books(request):
         
         return Response(model_to_dict(booking), status=201)        
 
-
+# class based menuItem views
 class MenuItemView(generics.ListCreateAPIView):
     queryset = MenuItem.objects.all() 
     serializer_class = MenuItemSerializer 
 
-
+# class based single menuItem view
 class SingleMenuItem(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all() 
     serializer_class = MenuItemSerializer
@@ -127,12 +128,17 @@ def category_detail(request, pk):
 def menu_items(request):
     if request.method == 'GET':
         items = MenuItem.objects.select_related('category').all()
-        #filter by menuItems by name and price
+        #retrieve the category name
         category_name = request.query_perams.get('category')
+        #retrieve the price name
         to_price = request.query_perams.get('to_price') 
+        #retrive the search name
         search = request.query_perams.get('search') 
-        ordering = request.query_perams.get('ordering')
-        
+        #retrived the odring name
+        ordering = request.query_perams.get('ordering') 
+        # pagination
+        perpage = request.query_perams.get('perpage', default=2) 
+        page = request.query_perams.get('page', default=1)
         #filter by manu items name
         if category_name:
             items = items.filter(category__title=category_name)
@@ -149,6 +155,13 @@ def menu_items(request):
         if ordering:
             ordering_fields = ordering.split(',')
             items = items.order_by(ordering_fields)
+        
+        #perform pagination   
+        paginator = Paginator(items, per_page=perpage) 
+        try:
+            items = paginator.page(number=page) 
+        except EmptyPage:
+            items = []
             
         serialized_item = MenuItemSerializer(items, many=True, context={'request':request})
         return Response(serialized_item.data) 
@@ -163,4 +176,5 @@ def menu_items(request):
 def single_menuItem(request, id):
     item = get_object_or_404(MenuItem, pk = id) 
     serialized_item = MenuItemSerializer(item) 
-    return Response(serialized_item.data)
+    return Response(serialized_item.data)  
+

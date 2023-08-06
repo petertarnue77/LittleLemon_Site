@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Items</title>
+</head>
+<body>
+    <h3>Booking list</h3> 
+    <table style="border: 1px solid black;"> 
+        <tr>
+            <th style="border: 1px solid black;">First Name</th> 
+            <th style="border: 1px solid black;">Last Name</th> 
+            <th style="border: 1px solid black;">Booking Time</th>
+            <th style="border: 1px solid black;">Number of Persons</th> 
+            <th style="border: 1px solid black;">Notes</th>
+        
+        {% if booking_items %} 
+        {% for booking in booking_items %} 
+        </tr> 
+        <tr>
+            <td style="border: 1px solid black;">{{ booking.first_name }}</td>
+            <td style="border: 1px solid black;">{{ booking.last_name }}</td>
+            <td style="border: 1px solid black;">{{ booking.booking_time}}</td>
+            <td style="border: 1px solid black;">{{ booking.number_of_person }}</td> 
+            <td style="border: 1px solid black;">{{ booking.notes }}</td>
+        </tr>
+        {% endfor %} 
+        {% else %} 
+        <P> There are NO booking availabel yet. Please check back</P> 
+        {% endif %}
+    </table>
+</body>
+</html>

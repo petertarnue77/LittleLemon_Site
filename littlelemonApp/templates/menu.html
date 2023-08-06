@@ -1,0 +1,30 @@
+{% extends 'base.html' %}  
+
+{% load static %} 
+
+{% block contents %}
+
+<h1>Menu</h1>
+<!--Begin col-->
+<div class="column">
+    <table style="border: 1px solid black;">
+        <tr>
+            <th style="border: 1px solid black;"><b>Name</b></th>
+            <th style="border: 1px solid black;"><b>Price</b></th>
+            <th style="border: 1px solid black;"><b>Description</b></th>
+        </tr>
+        {% if menu_data %}
+        {% for menu in menu_data %}
+        <tr>
+            <td style="border: 1px solid black;"><b>{{ menu.name }}</b></td>
+            <td style="border: 1px solid black;"><b>${{ menu.price }}00</b></td> 
+            <td style="border: 1px solid black;"><b>{{ menu.description }}</b></td>
+        </tr>
+        {% endfor %} 
+        {% else %} 
+        <p>Oh! There are no menu item available right now. Please check back.</p>
+        {% endif %}
+    </table>
+</div>
+<!--End col-->
+{% endblock %}

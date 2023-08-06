@@ -4,7 +4,8 @@ from django.db import IntegrityError
 
 from django.views.decorators.csrf import csrf_exempt 
 from rest_framework.decorators import renderer_classes
-from django.forms.models import model_to_dict 
+from django.forms.models import model_to_dict  
+from django.core.paginator import EmptyPage, Paginator
 
 from rest_framework import generics 
 from rest_framework.decorators import api_view 
@@ -134,7 +135,10 @@ def menu_items(request):
         #retrive the search name
         search = request.query_perams.get('search') 
         #retrived the odring name
-        ordering = request.query_perams.get('ordering')
+        ordering = request.query_perams.get('ordering') 
+        # pagination
+        perpage = request.query_perams.get('perpage', default=2) 
+        page = request.query_perams.get('page', default=1)
         #filter by manu items name
         if category_name:
             items = items.filter(category__title=category_name)
@@ -151,6 +155,13 @@ def menu_items(request):
         if ordering:
             ordering_fields = ordering.split(',')
             items = items.order_by(ordering_fields)
+        
+        #perform pagination   
+        paginator = Paginator(items, per_page=perpage) 
+        try:
+            items = paginator.page(number=page) 
+        except EmptyPage:
+            items = []
             
         serialized_item = MenuItemSerializer(items, many=True, context={'request':request})
         return Response(serialized_item.data) 
@@ -165,4 +176,5 @@ def menu_items(request):
 def single_menuItem(request, id):
     item = get_object_or_404(MenuItem, pk = id) 
     serialized_item = MenuItemSerializer(item) 
-    return Response(serialized_item.data)
+    return Response(serialized_item.data)  
+

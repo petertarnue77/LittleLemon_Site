@@ -7,7 +7,13 @@ from rest_framework.validators import UniqueValidator
 from rest_framework.validators import UniqueTogetherValidator
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer): 
+    # Sanitised category fields 
+    def validate(self, attrs): 
+        attrs['title'] = bleach.clean(attrs['title'])
+        attrs['slug'] = bleach.clean(attrs['slug'])
+        return super().validate(attrs)
+    
     class Meta: 
         model = Category 
         fields = ['id','title', 'slug']
@@ -20,11 +26,17 @@ class MenuItemSerializer(serializers.ModelSerializer):
     
     def validate(self, attrs):
         attrs['title'] = bleach.clean(attrs['title'])
+        attrs['stock'] = bleach.clean(attrs['stock']) 
+        attrs['description'] = bleach.clean(attrs['description'])
+        attrs['price'] = bleach.clean(attrs['price'])
         if (attrs['price']<2):
-            raise serializers.ValidationError("price can't less then 2.00.") 
+            raise serializers.ValidationError("price can't less then 2.00.")
+        attrs['inventory'] = bleach.clean(attrs['inventory'])
         if (attrs['inventory']< 0):
             raise serializers.ValidationError('Stock cannot be less then 0')
-        return super().validate(attrs)
+        
+        return super().validate(attrs) 
+    
     
     class Meta: 
         model = MenuItem

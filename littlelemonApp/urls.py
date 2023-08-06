@@ -14,8 +14,9 @@ urlpatterns = [
     path('menu-items/<int:pk>', views.SingleMenuItem.as_view()), 
     
     path('menu-restapi/', views.menu_restApi),
-    path('single-menu-rest/', views.single_item_rest),
+    path('menu-restapi/<int:id>', views.single_item_rest),
     
     path('category/<int:pk>',views.category_detail, name='category-detail'), 
     path('menu-nested/', views.menu_items),
+    path('menu-nested/<int:id>', views.single_menuItem)
 ]

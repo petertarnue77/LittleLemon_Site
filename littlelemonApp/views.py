@@ -86,12 +86,12 @@ def books(request):
         
         return Response(model_to_dict(booking), status=201)        
 
-
+# class based menuItem views
 class MenuItemView(generics.ListCreateAPIView):
     queryset = MenuItem.objects.all() 
     serializer_class = MenuItemSerializer 
 
-
+# class based single menuItem view
 class SingleMenuItem(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all() 
     serializer_class = MenuItemSerializer
@@ -127,12 +127,14 @@ def category_detail(request, pk):
 def menu_items(request):
     if request.method == 'GET':
         items = MenuItem.objects.select_related('category').all()
-        #filter by menuItems by name and price
+        #retrieve the category name
         category_name = request.query_perams.get('category')
+        #retrieve the price name
         to_price = request.query_perams.get('to_price') 
+        #retrive the search name
         search = request.query_perams.get('search') 
+        #retrived the odring name
         ordering = request.query_perams.get('ordering')
-        
         #filter by manu items name
         if category_name:
             items = items.filter(category__title=category_name)

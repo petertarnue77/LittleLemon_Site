@@ -137,7 +137,6 @@ REST_FRAMEWORK = {
         'rest_framework_yaml.renderers.YAMLRenderer', 
     ],
     
-    
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',

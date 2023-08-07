@@ -5,7 +5,8 @@ from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt 
 from rest_framework.decorators import renderer_classes
 from django.forms.models import model_to_dict  
-from django.core.paginator import EmptyPage, Paginator
+from django.core.paginator import EmptyPage, Paginator 
+from rest_framework import viewsets
 
 from rest_framework import generics 
 from rest_framework.decorators import api_view 
@@ -87,13 +88,15 @@ def books(request):
         
         return Response(model_to_dict(booking), status=201)        
 
-# class based menuItem views
-class MenuItemView(generics.ListCreateAPIView):
+# class based menuItem viewSet class
+class MenuItemViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all() 
     serializer_class = MenuItemSerializer 
+    ordering_fields = ['price', 'inventory'] 
+    search_fields = ['title', 'category__title']
 
-# class based single menuItem view
-class SingleMenuItem(generics.RetrieveUpdateDestroyAPIView):
+# class based single menuItem with viewset class
+class SingleMenuItemViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all() 
     serializer_class = MenuItemSerializer
     ordering_fields = ['price','inventory']

@@ -18,7 +18,7 @@ class CategorySerializer(serializers.ModelSerializer):
 # view for nesting category field as detial field inside MenuItems
 class MenuItemSerializer(serializers.ModelSerializer):
     price_after_tax = serializers.SerializerMethodField(method_name='calculate_tax')
-    title = serializers.CharField(source='name', validators = [UniqueValidator(queryset=MenuItem.objects.all())]) 
+    title = serializers.CharField(source='name', validatos = [UniqueValidator(queryset=MenuItem.objects.all())]) 
     stock = serializers.IntegerField(source='inventory')     
     
     def validate(self, attrs):

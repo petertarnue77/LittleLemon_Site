@@ -6,17 +6,14 @@ import bleach
 from rest_framework.validators import UniqueValidator
 from rest_framework.validators import UniqueTogetherValidator
 
-
 class CategorySerializer(serializers.ModelSerializer): 
-    # Sanitised category fields 
-    def validate(self, attrs): 
+    def validate(self, attrs):
         attrs['title'] = bleach.clean(attrs['title'])
-        attrs['slug'] = bleach.clean(attrs['slug'])
-        return super().validate(attrs)
-    
+        attrs['slug'] = bleach.clean(attrs['title'])
+        
     class Meta: 
         model = Category 
-        fields = ['id','title', 'slug']
+        fields = ['id', 'title']
 
 # view for nesting category field as detial field inside MenuItems
 class MenuItemSerializer(serializers.ModelSerializer):

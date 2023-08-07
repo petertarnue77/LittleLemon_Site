@@ -10,8 +10,8 @@ urlpatterns = [
     
     #API for booking 
     path('books/', views.books, name='books'),
-    path('menu-items/', views.MenuItemViewSet.as_view({'get': 'list'})),
-    path('menu-items/<int:pk>', views.SingleMenuItemViewSet.as_view({'get': 'retrieve'})), 
+    path('men-items/', views.MenuItemView.as_view()),
+    path('menu-items/<int:id>', views.SingleMenuItemView.as_view()),
     
     path('menu-restapi/', views.menu_restApi),
     path('menu-restapi/<int:id>', views.single_item_rest),

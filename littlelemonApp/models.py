@@ -38,3 +38,4 @@ class Booking(models.Model):
         indexes = [
             models.Index(fields=['number_of_person'])
         ]
+        

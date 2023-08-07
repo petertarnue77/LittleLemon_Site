@@ -10,13 +10,13 @@ urlpatterns = [
     
     #API for booking 
     path('books/', views.books, name='books'),
-    path('men-items/', views.MenuItemView.as_view()),
-    path('menu-items/<int:id>', views.SingleMenuItemView.as_view()),
+    path('menu-items/', views.MenuItemViews.as_view()),
+    path('menu-items/<int:pk>', views.SingleMenuItemView.as_view()),
     
-    path('menu-restapi/', views.menu_restApi),
-    path('menu-restapi/<int:id>', views.single_item_rest),
+    # path('menu-restapi/', views.menu_restApi),
+    # path('menu-restapi/<int:id>', views.single_item_rest),
     
-    path('category/<int:pk>',views.category_detail, name='category-detail'), 
-    path('menu-nested/', views.menu_items),
-    path('menu-nested/<int:id>', views.single_menuItem)
+    # path('category/<int:pk>',views.category_detail, name='category-detail'), 
+    # path('menu-nested/', views.menu_items),
+    # path('menu-nested/<int:id>', views.single_menuItem)
 ]

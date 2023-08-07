@@ -15,7 +15,7 @@ from rest_framework import status
 
 from .models import MenuItem, Booking, Category
 from .forms import BookingForm  
-from .serializers import MenuItemSerializer 
+from .serializers import MenuItemSerializer , CategorySerializer
 
 
 # Create your views here. 
@@ -87,15 +87,16 @@ def books(request):
         
         return Response(model_to_dict(booking), status=201)        
 
-# class based Category view
-class CategoryView(generics.ListCreateAPIView): 
+
+class CategoryView(generics.ListCreateAPIView):
     queryset = Category.objects.all() 
     serializer_class = CategorySerializer
+
     
 # class based menuItem View
-class MenuItemView(generics.ListCreateAPIView):
-    queryset = MenuItem.objects.all() 
-    serializer_class = MenuItemSerializer 
+class MenuItemViews(generics.ListCreateAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
     ordering_fields = ['price', 'inventory']  
     filterset_fields = ['price', 'inventory']
     search_fields = ['title', 'category__title']

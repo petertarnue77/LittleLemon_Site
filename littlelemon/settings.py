@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "littlelemonApp",
     "rest_framework",
+    "djoser",
     "debug_toolbar", 
     'django_filters', 
     'rest_framework.authtoken',
@@ -169,4 +170,8 @@ REST_FRAMEWORK = {
         'ten': '10/minue'
     },
     
+}
+
+DJOSER = {
+    "USER_ID_FIELD": "username"
 }

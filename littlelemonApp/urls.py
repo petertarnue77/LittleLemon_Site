@@ -5,7 +5,17 @@ from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns = [
     path('categories/', views.CategoriesView.as_view()),
     path('menu-items/', views.MenuItemView.as_view()),
-    path('menu-items/<int:pk>',)
+    path('menu-items/<int:pk>', views.SingleMenuItemView.as_view()), 
+    path('cart/', views.CartView.as_view()), 
+    path("cart/menu-items", views.CartView.as_view()), 
+    path('order/', views.OrderView.as_view()), 
+    path('orders/<int:pk>', views.SingleMenuItemView.as_view()), 
+    
+    path("groups/manager/users", views.GroupViewSet.as_view(
+        {'get': 'list', 'post': 'create','delete':'destroy'})),
+    
+    path('groups/delivery-crew/users', views.DeliveryCrewView.as_view(
+        {'get': 'list', 'post': 'create', 'delete': 'destroy'})),
 ]
     
     

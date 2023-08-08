@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "littlelemonApp",
     "rest_framework",
     "debug_toolbar", 
-    'django_filters',
+    'django_filters', 
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ WSGI_APPLICATION = "littlelemon.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": 'little_lemon_db',#BASE_DIR / "db.sqlite3",
+        "NAME": 'pkt_db1',#BASE_DIR / "db.sqlite3",
         "USER": 'root',
         'PASSWORD': 'password',
         'PORT': '3306',
@@ -129,7 +130,8 @@ STATICFILES_DIRS = ['littlelemonApp/static',]
 
 INTERNAL_IPS = ["127.0.0.1"] 
 
-REST_FRAMEWORK = {
+REST_FRAMEWORK = { 
+    #default renderer classes
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
@@ -138,12 +140,33 @@ REST_FRAMEWORK = {
         'rest_framework_yaml.renderers.YAMLRenderer', 
     ],
     
+    #default filter Backends
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
         'rest_framework.filters.SearchFilter',
     ],
     
+    #default Pagination class
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2
+    'PAGE_SIZE': 3,
+    
+    #default authenticaton classes
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ], 
+    
+    # default throttle classes
+    'DEFAULT_THROTTLE_CLASSES' : [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+     
+    # default throttle rate
+    'DEFAULT_THROTTLE_RATES':  {
+        'anon': '2/minute', 
+        'user':'5/minute',
+        'ten': '10/minue'
+    },
+    
 }

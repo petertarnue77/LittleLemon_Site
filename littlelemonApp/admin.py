@@ -31,4 +31,9 @@ class order(admin.ModelAdmin):
 
 @admin.register(OrderItem) 
 class orderItem(admin.ModelAdmin): 
-    list_display = ('order','menuitem','quantity', 'price')
+    list_display = ('order','menuitem','quantity', 'price') 
+
+# from .models import Rating
+# @admin.register(Rating) 
+# class rating(admin.ModelAdmin): 
+#     list_display = ('rating','category')

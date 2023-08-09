@@ -39,10 +39,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "littlelemonApp",
     "rest_framework",
-    "djoser",
     "debug_toolbar", 
     'django_filters', 
     'rest_framework.authtoken',
+    "djoser",
 ]
 
 MIDDLEWARE = [
@@ -154,7 +154,8 @@ REST_FRAMEWORK = {
     
     #default authenticaton classes
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
+        'rest_framework.authentication.TokenAuthentication',
+        "rest_framework.authentication.SessionAuthentication",
     ], 
     
     # default throttle classes
@@ -168,8 +169,7 @@ REST_FRAMEWORK = {
         'anon': '2/minute', 
         'user':'5/minute',
         'ten': '10/minue'
-    },
-    
+    }, 
 }
 
 DJOSER = {

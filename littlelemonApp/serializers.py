@@ -5,7 +5,7 @@ from rest_framework.validators import UniqueTogetherValidator
 from decimal import Decimal 
 import bleach
 
-from .models import MenuItem, Category, Cart, Order, OrderItem
+from .models import MenuItem, Category, Cart, Order, OrderItem, Rating
 
 
 
@@ -78,8 +78,26 @@ class UserSerializer(serializers.ModelSerializer):
         model = User 
         fields =['id', 'username', 'email']
     
+
+# class RatingSerializer (serializers.ModelSerializer):
+#     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),default=serializers.CurrentUserDefault())
+
+#     class Meta:
+#         model = Rating
+#         fields = ["user", 'menuitem_id', 'rating']
+
+#     validators = [
+#         UniqueTogetherValidator(
+#             queryset=Rating.objects.all(),
+#             fields=['user', 'menuitem_id', 'rating']
+#         )
+#     ]
     
-    
+#     extra_kwargs = {
+#         'rating': {'min_value': 0, 'max_value':5},
+#     }
+
+
 # View for nesting category field inside MenuItems as hyperlinked
 # class MenuItemSerializer(serializers.HyperlinkedModelSerializer): 
 #     price_after_tax = serializers.SerializerMethodField(method_name='calculate_tax') 

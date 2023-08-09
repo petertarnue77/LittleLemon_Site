@@ -5,9 +5,8 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404 
 from django.contrib.auth.models import Group, User
 
-from .models import Category, MenuItem, Cart, Order, OrderItem
+from .models import Category, MenuItem, Cart, Order, OrderItem, Rating
 from .serializers import CartSerializer, MenuItemSerializer, OrderSerializer, UserSerializer, CategorySerializer
-
 #Import Authentication classes
 from rest_framework.permissions import IsAuthenticated 
 from rest_framework.permissions import IsAdminUser
@@ -112,7 +111,7 @@ class OrderView(generics.ListCreateAPIView):
         
 class SingleOrderView(generics.RetrieveUpdateAPIView): 
     queryset = Order.objects.all() 
-    serializer_class = OrderSerializer 
+    serializer_class = OrderSerializer  
     permission_classes = [IsAuthenticated] 
     
     def update(self, request, *args, **kwargs): 
@@ -176,9 +175,14 @@ class DeliveryCrewView(viewsets.ViewSet):
         return Response({"Message": "User removed from the deliver crew group"}, 200)
 
 
+# class RatingsView(generics.ListCreateAPIView):
+#     queryset = Rating.objects.all()
+#     serializer_class = RatingSerializer
 
-
-
+#     def get_permissions(self):
+#         if(self.request.method=='GET'):
+#             return []
+#         return [IsAuthenticated()]
 
 
 
